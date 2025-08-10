@@ -6,25 +6,25 @@ import PackageDescription
 let useLocalPackages = (try? String(contentsOfFile: "\(Context.packageDirectory)/.env.development", encoding: .utf8).contains("USE_LOCAL_PACKAGES=true")) == true
 
 extension String {
-    static let mailgun: Self = "Mailgun"
-    static let accountManagement: Self = "Mailgun AccountManagement"
-    static let credentials: Self = "Mailgun Credentials"
-    static let customMessageLimit: Self = "Mailgun CustomMessageLimit"
-    static let domains: Self = "Mailgun Domains"
-    static let iPAllowlist: Self = "Mailgun IPAllowlist"
-    static let ipPools: Self = "Mailgun IPPools"
-    static let ips: Self = "Mailgun IPs"
-    static let keys: Self = "Mailgun Keys"
-    static let lists: Self = "Mailgun Lists"
-    static let messages: Self = "Mailgun Messages"
-    static let reporting: Self = "Mailgun Reporting"
-    static let routes: Self = "Mailgun Routes"
-    static let subaccounts: Self = "Mailgun Subaccounts"
-    static let suppressions: Self = "Mailgun Suppressions"
-    static let templates: Self = "Mailgun Templates"
-    static let users: Self = "Mailgun Users"
-    static let webhooks: Self = "Mailgun Webhooks"
-    static let shared: Self = "Mailgun Shared"
+    static let mailgun: Self = "Mailgun".live
+    static let accountManagement: Self = "Mailgun AccountManagement".live
+    static let credentials: Self = "Mailgun Credentials".live
+    static let customMessageLimit: Self = "Mailgun CustomMessageLimit".live
+    static let domains: Self = "Mailgun Domains".live
+    static let iPAllowlist: Self = "Mailgun IPAllowlist".live
+    static let ipPools: Self = "Mailgun IPPools".live
+    static let ips: Self = "Mailgun IPs".live
+    static let keys: Self = "Mailgun Keys".live
+    static let lists: Self = "Mailgun Lists".live
+    static let messages: Self = "Mailgun Messages".live
+    static let reporting: Self = "Mailgun Reporting".live
+    static let routes: Self = "Mailgun Routes".live
+    static let subaccounts: Self = "Mailgun Subaccounts".live
+    static let suppressions: Self = "Mailgun Suppressions".live
+    static let templates: Self = "Mailgun Templates".live
+    static let users: Self = "Mailgun Users".live
+    static let webhooks: Self = "Mailgun Webhooks".live
+    static let shared: Self = "Mailgun Shared".live
 }
 
 extension Target.Dependency {
@@ -433,5 +433,6 @@ let package = Package(
 
 extension String {
     var tests: Self { self + " Tests" }
+    var live: Self { self + " Live" }
     var types: Self { self + " Types" }
 }
