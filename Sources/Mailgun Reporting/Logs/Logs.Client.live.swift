@@ -1,6 +1,6 @@
 //
 //  Logs.Client.live.swift
-//  coenttb-mailgun
+//  swift-mailgun-live
 //
 //  Created by Claude on 08/01/2025.
 //

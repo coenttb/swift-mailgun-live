@@ -85,7 +85,7 @@ extension Target.Dependency {
 }
 
 let package = Package(
-    name: "coenttb-mailgun",
+    name: "swift-mailgun-live",
     platforms: [
         .macOS(.v14),
         .iOS(.v17)

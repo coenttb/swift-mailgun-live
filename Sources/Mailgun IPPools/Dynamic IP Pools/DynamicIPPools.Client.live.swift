@@ -1,6 +1,6 @@
 //
 //  DynamicIPPools.Client.live.swift
-//  coenttb-mailgun
+//  swift-mailgun-live
 //
 //  Created by Coen ten Thije Boonkkamp on 05/08/2025.
 //

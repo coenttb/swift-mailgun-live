@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  coenttb-mailgun
+//  swift-mailgun-live
 //
 //  Created by coenttb on 26/12/2024.
 //

@@ -1,4 +1,4 @@
-# coenttb-mailgun
+# swift-mailgun-live
 
 <p align="center">
   <img src="https://img.shields.io/badge/Swift-6.0-orange.svg" alt="Swift 6.0">
@@ -17,10 +17,10 @@
 
 ## Overview
 
-**coenttb-mailgun** is a modern, type-safe Swift SDK for Mailgun that brings the full power of Swift 6's concurrency model to email automation. Built on top of [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types), it provides production-ready implementations with exhaustive API coverage.
+**swift-mailgun-live** is a modern, type-safe Swift SDK for Mailgun that brings the full power of Swift 6's concurrency model to email automation. Built on top of [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types), it provides production-ready implementations with exhaustive API coverage.
 
 ```swift
-// github.com/coenttb/coenttb-mailgun
+// github.com/coenttb/swift-mailgun-live
 import Mailgun
 
 @Dependency(\.mailgun) var mailgun
@@ -93,17 +93,17 @@ print("Email sent: \(response.id) ✅")
 
 ## Installation
 
-Add coenttb-mailgun to your `Package.swift`:
+Add swift-mailgun-live to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/coenttb-mailgun", from: "0.0.1")
+    .package(url: "https://github.com/coenttb/swift-mailgun-live", from: "0.0.1")
 ],
 targets: [
     .target(
         name: "YourTarget",
         dependencies: [
-            .product(name: "Mailgun", package: "coenttb-mailgun")
+            .product(name: "Mailgun", package: "swift-mailgun-live")
         ]
     )
 ]
@@ -442,10 +442,10 @@ The package includes helpful test utilities:
 
 ## Architecture
 
-coenttb-mailgun implements the types and interfaces defined in [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types):
+swift-mailgun-live implements the types and interfaces defined in [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types):
 
 ```
-swift-mailgun-types              coenttb-mailgun
+swift-mailgun-types              swift-mailgun-live
        │                               │
        ├─ Types & Models ─────────────►├─ Live Implementations
        ├─ Client Interfaces ──────────►├─ URLSession Networking
@@ -467,15 +467,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Example Projects
 
-See coenttb-mailgun in action:
+See swift-mailgun-live in action:
 
-- [coenttb.com](https://github.com/coenttb/coenttb-com-server) - Production website using coenttb-mailgun
-- [coenttb-newsletter](https://github.com/coenttb/coenttb-newsletter) - Newsletter system built with coenttb-mailgun
+- [coenttb.com](https://github.com/coenttb/coenttb-com-server) - Production website using swift-mailgun-live
+- [coenttb-newsletter](https://github.com/coenttb/coenttb-newsletter) - Newsletter system built with swift-mailgun-live
 
 ## Support
 
-- 🐛 [Issues](https://github.com/coenttb/coenttb-mailgun/issues) - Report bugs or request features
-- 💬 [Discussions](https://github.com/coenttb/coenttb-mailgun/discussions) - Ask questions
+- 🐛 [Issues](https://github.com/coenttb/swift-mailgun-live/issues) - Report bugs or request features
+- 💬 [Discussions](https://github.com/coenttb/swift-mailgun-live/discussions) - Ask questions
 - 📧 [Newsletter](http://coenttb.com/en/newsletter/subscribe) - Get updates
 - 🐦 [X (Twitter)](http://x.com/coenttb) - Follow for news
 - 💼 [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Connect
