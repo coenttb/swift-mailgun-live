@@ -4,9 +4,11 @@
 !.swiftpm/*.xctestplan
 Package.resolved
 
-# Environment files
-.env*
-!.env.example
+.env.development
+.env.production
+.env.test
+!.env
+
 
 # Xcode
 *.xcodeproj

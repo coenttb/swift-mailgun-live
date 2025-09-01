@@ -1,4 +1,4 @@
-# coenttb-mailgun
+# swift-mailgun-live
 
 <p align="center">
   <img src="https://img.shields.io/badge/Swift-6.0-orange.svg" alt="Swift 6.0">
@@ -7,21 +7,23 @@
   <img src="https://img.shields.io/badge/Coverage-100%25%20APIs-brightgreen.svg" alt="API Coverage">
   <img src="https://img.shields.io/badge/License-AGPL--3.0%20|%20Commercial-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/Status-Production%20Ready-green.svg" alt="Status">
-  <img src="https://img.shields.io/badge/Version-0.0.1-brightgreen.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-0.1.0-brightgreen.svg" alt="Version">
 </p>
 
 <p align="center">
-  <strong>Modern, type-safe Swift SDK for Mailgun</strong><br>
-  Production-ready implementation with comprehensive API coverage
+  <strong>Live implementation layer for swift-mailgun-types</strong><br>
+  Production-ready URLSession networking with comprehensive API coverage
 </p>
 
 ## Overview
 
-**coenttb-mailgun** is a modern, type-safe Swift SDK for Mailgun that brings the full power of Swift 6's concurrency model to email automation. Built on top of [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types), it provides production-ready implementations with exhaustive API coverage.
+**swift-mailgun-live** provides the production-ready, live implementations for the types and interfaces defined in [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types). This package transforms the type-safe contracts into a fully functional Mailgun SDK with URLSession-based networking, authentication, and comprehensive test coverage.
+
+> **Note:** For most users, we recommend using [swift-mailgun](https://github.com/coenttb/swift-mailgun) which provides a complete, user-friendly package that includes this implementation along with additional integrations for SwiftUI, HTML rendering, and more.
 
 ```swift
-// github.com/coenttb/coenttb-mailgun
-import Mailgun
+// Direct usage (for advanced users)
+import Mailgun  // from swift-mailgun-live
 
 @Dependency(\.mailgun) var mailgun
 
@@ -93,17 +95,37 @@ print("Email sent: \(response.id) ✅")
 
 ## Installation
 
-Add coenttb-mailgun to your `Package.swift`:
+### Recommended: Use swift-mailgun
+
+For most users, install via the main entry point package:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/coenttb-mailgun", from: "0.0.1")
+    .package(url: "https://github.com/coenttb/swift-mailgun", from: "0.2.0")
 ],
 targets: [
     .target(
         name: "YourTarget",
         dependencies: [
-            .product(name: "Mailgun", package: "coenttb-mailgun")
+            .product(name: "CoenttbMailgun", package: "swift-mailgun")
+        ]
+    )
+]
+```
+
+### Direct Installation (Advanced)
+
+If you only need the live implementation without additional integrations:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/coenttb/swift-mailgun-live", from: "0.1.0")
+],
+targets: [
+    .target(
+        name: "YourTarget",
+        dependencies: [
+            .product(name: "Mailgun", package: "swift-mailgun-live")
         ]
     )
 ]
@@ -442,15 +464,42 @@ The package includes helpful test utilities:
 
 ## Architecture
 
-coenttb-mailgun implements the types and interfaces defined in [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types):
+**swift-mailgun-live** is part of a three-package ecosystem:
 
 ```
-swift-mailgun-types              coenttb-mailgun
-       │                               │
-       ├─ Types & Models ─────────────►├─ Live Implementations
-       ├─ Client Interfaces ──────────►├─ URLSession Networking
-       ├─ API Routes ─────────────────►├─ Authentication
-       └─ Test Support ───────────────►└─ Production Features
+┌─────────────────────────────────────────────────────────┐
+│                   swift-mailgun                       │
+│         (User-facing package with integrations)         │
+│                                                         │
+│  • SwiftUI components                                   │
+│  • HTML email templates                                 │
+│  • Re-exports swift-mailgun-live                       │
+│  • Additional convenience features                      │
+└─────────────────────────────────────────────────────────┘
+                            │
+                      imports/uses
+                            ▼
+┌─────────────────────────────────────────────────────────┐
+│                  swift-mailgun-live                     │
+│              (Live implementation layer)                │
+│                                                         │
+│  • URLSession networking                                │
+│  • Authentication handling                              │
+│  • Dependency injection                                 │
+│  • Production-ready clients                             │
+└─────────────────────────────────────────────────────────┘
+                            │
+                       implements
+                            ▼
+┌─────────────────────────────────────────────────────────┐
+│                  swift-mailgun-types                    │
+│            (Type definitions & interfaces)              │
+│                                                         │
+│  • Domain models                                        │
+│  • Client protocols                                     │
+│  • API route definitions                                │
+│  • Shared utilities                                     │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ### Key Components
@@ -467,15 +516,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Example Projects
 
-See coenttb-mailgun in action:
+See the Mailgun SDK ecosystem in action:
 
-- [coenttb.com](https://github.com/coenttb/coenttb-com-server) - Production website using coenttb-mailgun
-- [coenttb-newsletter](https://github.com/coenttb/coenttb-newsletter) - Newsletter system built with coenttb-mailgun
+- [coenttb.com](https://github.com/coenttb/coenttb-com-server) - Production website using swift-mailgun
+- [coenttb-newsletter](https://github.com/coenttb/coenttb-newsletter) - Newsletter system built with swift-mailgun
 
 ## Support
 
-- 🐛 [Issues](https://github.com/coenttb/coenttb-mailgun/issues) - Report bugs or request features
-- 💬 [Discussions](https://github.com/coenttb/coenttb-mailgun/discussions) - Ask questions
+- 🐛 [Issues](https://github.com/coenttb/swift-mailgun-live/issues) - Report bugs or request features
+- 💬 [Discussions](https://github.com/coenttb/swift-mailgun-live/discussions) - Ask questions
 - 📧 [Newsletter](http://coenttb.com/en/newsletter/subscribe) - Get updates
 - 🐦 [X (Twitter)](http://x.com/coenttb) - Follow for news
 - 💼 [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Connect
