@@ -10,48 +10,49 @@ import Foundation
 import IssueReporting
 @_exported import Mailgun_IPPools_Types
 @_exported import Mailgun_Shared_Live
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+  import FoundationNetworking
 #endif
 
 extension Mailgun.DynamicIPPools.Client {
-    public static func live(
-        makeRequest: @escaping @Sendable (_ route: Mailgun.DynamicIPPools.API) throws -> URLRequest
-    ) -> Self {
-        @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
+  public static func live(
+    makeRequest: @escaping @Sendable (_ route: Mailgun.DynamicIPPools.API) throws -> URLRequest
+  ) -> Self {
+    @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
 
-        return Self(
-            listHistory: { request in
-                try await handleRequest(
-                    for: makeRequest(.listHistory(request: request)),
-                    decodingTo: Mailgun.DynamicIPPools.HistoryList.Response.self
-                )
-            },
-
-            removeOverride: { domain in
-                try await handleRequest(
-                    for: makeRequest(.removeOverride(domain: domain)),
-                    decodingTo: Mailgun.DynamicIPPools.RemoveOverride.Response.self
-                )
-            }
+    return Self(
+      listHistory: { request in
+        try await handleRequest(
+          for: makeRequest(.listHistory(request: request)),
+          decodingTo: Mailgun.DynamicIPPools.HistoryList.Response.self
         )
-    }
+      },
+
+      removeOverride: { domain in
+        try await handleRequest(
+          for: makeRequest(.removeOverride(domain: domain)),
+          decodingTo: Mailgun.DynamicIPPools.RemoveOverride.Response.self
+        )
+      }
+    )
+  }
 }
 
 extension Mailgun.DynamicIPPools {
-    public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
-        Mailgun.DynamicIPPools.API,
-        Mailgun.DynamicIPPools.API.Router,
-        Mailgun.DynamicIPPools.Client
-    >
+  public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
+    Mailgun.DynamicIPPools.API,
+    Mailgun.DynamicIPPools.API.Router,
+    Mailgun.DynamicIPPools.Client
+  >
 }
 
 extension Mailgun.DynamicIPPools: @retroactive DependencyKey {
-    public static var liveValue: Mailgun.DynamicIPPools.Authenticated {
-        try! Mailgun.DynamicIPPools.Authenticated { .live(makeRequest: $0) }
-    }
+  public static var liveValue: Mailgun.DynamicIPPools.Authenticated {
+    try! Mailgun.DynamicIPPools.Authenticated { .live(makeRequest: $0) }
+  }
 }
 
 extension Mailgun.DynamicIPPools.API.Router: @retroactive DependencyKey {
-    public static let liveValue: Mailgun.DynamicIPPools.API.Router = .init()
+  public static let liveValue: Mailgun.DynamicIPPools.API.Router = .init()
 }

@@ -10,59 +10,60 @@ import Foundation
 import IssueReporting
 @_exported import Mailgun_Keys_Types
 @_exported import Mailgun_Shared_Live
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+  import FoundationNetworking
 #endif
 
 extension Mailgun.Keys.Client {
-    public static func live(
-        makeRequest: @escaping @Sendable (_ route: Mailgun.Keys.API) throws -> URLRequest
-    ) -> Self {
-        @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
+  public static func live(
+    makeRequest: @escaping @Sendable (_ route: Mailgun.Keys.API) throws -> URLRequest
+  ) -> Self {
+    @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
 
-        return Self(
-            list: {
-                try await handleRequest(
-                    for: makeRequest(.list),
-                    decodingTo: Mailgun.Keys.List.Response.self
-                )
-            },
-            create: { request in
-                try await handleRequest(
-                    for: makeRequest(.create(request: request)),
-                    decodingTo: Mailgun.Keys.Create.Response.self
-                )
-            },
-            delete: { keyId in
-                try await handleRequest(
-                    for: makeRequest(.delete(keyId: keyId)),
-                    decodingTo: Mailgun.Keys.Delete.Response.self
-                )
-            },
-            addPublicKey: { request in
-                try await handleRequest(
-                    for: makeRequest(.addPublicKey(request: request)),
-                    decodingTo: Mailgun.Keys.PublicKey.Response.self
-                )
-            }
+    return Self(
+      list: {
+        try await handleRequest(
+          for: makeRequest(.list),
+          decodingTo: Mailgun.Keys.List.Response.self
         )
-    }
+      },
+      create: { request in
+        try await handleRequest(
+          for: makeRequest(.create(request: request)),
+          decodingTo: Mailgun.Keys.Create.Response.self
+        )
+      },
+      delete: { keyId in
+        try await handleRequest(
+          for: makeRequest(.delete(keyId: keyId)),
+          decodingTo: Mailgun.Keys.Delete.Response.self
+        )
+      },
+      addPublicKey: { request in
+        try await handleRequest(
+          for: makeRequest(.addPublicKey(request: request)),
+          decodingTo: Mailgun.Keys.PublicKey.Response.self
+        )
+      }
+    )
+  }
 }
 
 extension Mailgun.Keys {
-    public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
-        Mailgun.Keys.API,
-        Mailgun.Keys.API.Router,
-        Mailgun.Keys.Client
-    >
+  public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
+    Mailgun.Keys.API,
+    Mailgun.Keys.API.Router,
+    Mailgun.Keys.Client
+  >
 }
 
 extension Mailgun.Keys: @retroactive DependencyKey {
-    public static var liveValue: Mailgun.Keys.Authenticated {
-        try! Mailgun.Keys.Authenticated { .live(makeRequest: $0) }
-    }
+  public static var liveValue: Mailgun.Keys.Authenticated {
+    try! Mailgun.Keys.Authenticated { .live(makeRequest: $0) }
+  }
 }
 
 extension Mailgun.Keys.API.Router: @retroactive DependencyKey {
-    public static let liveValue: Mailgun.Keys.API.Router = .init()
+  public static let liveValue: Mailgun.Keys.API.Router = .init()
 }

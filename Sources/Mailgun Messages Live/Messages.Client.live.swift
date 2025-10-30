@@ -10,70 +10,71 @@ import Foundation
 import IssueReporting
 @_exported import Mailgun_Messages_Types
 @_exported import Mailgun_Shared_Live
+
 #if canImport(FoundationNetworking)
-import FoundationNetworking
+  import FoundationNetworking
 #endif
 
 extension Mailgun.Messages.Client {
-    public static func live(
-        makeRequest: @escaping @Sendable (_ route: Mailgun.Messages.API) throws -> URLRequest
-    ) -> Self {
-        @Dependency(\.envVars.mailgun.domain) var domain
-        @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
+  public static func live(
+    makeRequest: @escaping @Sendable (_ route: Mailgun.Messages.API) throws -> URLRequest
+  ) -> Self {
+    @Dependency(\.envVars.mailgun.domain) var domain
+    @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
 
-        return Self(
-            send: { request in
-                try await handleRequest(
-                    for: makeRequest(.send(domain: domain, request: request)),
-                    decodingTo: Mailgun.Messages.Send.Response.self
-                )
-            },
-
-            sendMime: { request in
-                try await handleRequest(
-                    for: makeRequest(.sendMime(domain: domain, request: request)),
-                    decodingTo: Mailgun.Messages.Send.Response.self
-                )
-            },
-
-            retrieve: { storageKey in
-                try await handleRequest(
-                    for: makeRequest(.retrieve(domain: domain, storageKey: storageKey)),
-                    decodingTo: Mailgun.Messages.StoredMessage.self
-                )
-            },
-
-            queueStatus: {
-                try await handleRequest(
-                    for: makeRequest(.queueStatus(domain: domain)),
-                    decodingTo: Mailgun.Messages.Queue.Status.self
-                )
-            },
-
-            deleteAll: {
-                try await handleRequest(
-                    for: makeRequest(.deleteScheduled(domain: domain)),
-                    decodingTo: Mailgun.Messages.Delete.Response.self
-                )
-            }
+    return Self(
+      send: { request in
+        try await handleRequest(
+          for: makeRequest(.send(domain: domain, request: request)),
+          decodingTo: Mailgun.Messages.Send.Response.self
         )
-    }
+      },
+
+      sendMime: { request in
+        try await handleRequest(
+          for: makeRequest(.sendMime(domain: domain, request: request)),
+          decodingTo: Mailgun.Messages.Send.Response.self
+        )
+      },
+
+      retrieve: { storageKey in
+        try await handleRequest(
+          for: makeRequest(.retrieve(domain: domain, storageKey: storageKey)),
+          decodingTo: Mailgun.Messages.StoredMessage.self
+        )
+      },
+
+      queueStatus: {
+        try await handleRequest(
+          for: makeRequest(.queueStatus(domain: domain)),
+          decodingTo: Mailgun.Messages.Queue.Status.self
+        )
+      },
+
+      deleteAll: {
+        try await handleRequest(
+          for: makeRequest(.deleteScheduled(domain: domain)),
+          decodingTo: Mailgun.Messages.Delete.Response.self
+        )
+      }
+    )
+  }
 }
 
 extension Mailgun.Messages {
-    public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
-        Mailgun.Messages.API,
-        Mailgun.Messages.API.Router,
-        Mailgun.Messages.Client
-    >
+  public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
+    Mailgun.Messages.API,
+    Mailgun.Messages.API.Router,
+    Mailgun.Messages.Client
+  >
 }
 
 extension Mailgun.Messages: @retroactive DependencyKey {
-    public static var liveValue: Mailgun.Messages.Authenticated {
-        try! Mailgun.Messages.Authenticated { .live(makeRequest: $0) }
-    }
+  public static var liveValue: Mailgun.Messages.Authenticated {
+    try! Mailgun.Messages.Authenticated { .live(makeRequest: $0) }
+  }
 }
 
 extension Mailgun.Messages.API.Router: @retroactive DependencyKey {
-    public static let liveValue: Mailgun.Messages.API.Router = .init()
+  public static let liveValue: Mailgun.Messages.API.Router = .init()
 }
