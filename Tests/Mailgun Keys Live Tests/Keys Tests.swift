@@ -4,6 +4,10 @@
 //
 //  Created by Coen ten Thije Boonkkamp on 24/12/2024.
 //
+//  ⚠️ WARNING: API key creation tests trigger email notifications from Mailgun!
+//  Each API key created will send an email notification to the account owner.
+//  Minimize the number of key creation tests to reduce email volume.
+//
 
 import Dependencies
 import DependenciesTestSupport
@@ -175,13 +179,18 @@ struct MailgunKeysTests {
         }
     }
 
-    @Test("Should handle multiple keys creation and cleanup")
+    @Test(
+        "Should handle multiple keys creation and cleanup",
+        .disabled("Skipped to reduce email notifications - each key creation triggers an email")
+    )
     func testMultipleKeysCreationAndCleanup() async throws {
         do {
             var createdKeyIds: [String] = []
 
-            // Create multiple test keys
-            for i in 1...3 {
+            // Create just 1 test key to minimize email notifications
+            // (Mailgun sends an email notification for each key created)
+            // This test still verifies create/list/delete operations
+            for i in 1...1 {
                 let createRequest = Mailgun.Keys.Create.Request(
                     description: "Test Key #\(i) - \(Date())",
                     role: "admin",
@@ -228,7 +237,10 @@ struct MailgunKeysTests {
         }
     }
 
-    @Test("Should verify key properties")
+    @Test(
+        "Should verify key properties",
+        .disabled("Skipped to reduce email notifications - each key creation triggers an email")
+    )
     func testKeyProperties() async throws {
         do {
             // Create a key with specific description

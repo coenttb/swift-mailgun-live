@@ -77,7 +77,7 @@ struct WebhooksClientTests {
         // Now get the webhook
         do {
             let response = try await webhooks.client.get(.clicked)
-            #expect(response.webhook.urls.isEmpty)
+            #expect(!response.webhook.urls.isEmpty)
         } catch {
             // Webhook might not exist
             let errorMessage = "\(error)".lowercased()

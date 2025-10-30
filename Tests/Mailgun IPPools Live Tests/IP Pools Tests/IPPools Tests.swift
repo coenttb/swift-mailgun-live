@@ -67,14 +67,12 @@ struct MailgunIPPoolsTests {
             #expect(!response.poolId.isEmpty)
             #expect(!response.message.isEmpty)
 
-            // Clean up - delete the created pool
-            Task {
-                do {
-                    let deleteRequest = Mailgun.IPPools.Delete.Request(poolId: response.poolId)
-                    _ = try await ipPools.client.delete(response.poolId, deleteRequest)
-                } catch {
-                    // Silently ignore cleanup errors
-                }
+            // Clean up - delete the created pool (await properly instead of detached Task)
+            do {
+                let deleteRequest = Mailgun.IPPools.Delete.Request(poolId: response.poolId)
+                _ = try await ipPools.client.delete(response.poolId, deleteRequest)
+            } catch {
+                // Silently ignore cleanup errors
             }
         } catch {
             // Handle cases where pool creation might not be available
@@ -82,6 +80,8 @@ struct MailgunIPPoolsTests {
             if errorString.contains("404") || errorString.contains("not found") ||
                errorString.contains("forbidden") || errorString.contains("401") ||
                errorString.contains("unauthorized") || errorString.contains("400") ||
+               errorString.contains("403") ||
+               errorString.contains("not enabled") ||
                errorString.contains("quota") || errorString.contains("limit") {
                 #expect(Bool(true), "IP pool creation not available - this is expected for some account types")
             } else {

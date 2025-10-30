@@ -48,7 +48,7 @@ struct MailgunUsersTests {
 
         let response = try await users.client.list(request)
 
-        #expect(response.users.isEmpty)
+        // Response should be valid regardless of whether users exist
         #expect(response.total >= 0)
 
         // All returned users should match the filter criteria if any
@@ -222,7 +222,6 @@ struct MailgunUsersTests {
             let response = try await users.client.list(request)
 
             // Response should be valid regardless of whether users with that role exist
-            #expect(response.users.isEmpty)
             #expect(response.total >= 0)
         }
     }
