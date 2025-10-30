@@ -7,6 +7,7 @@
 
 import Dependencies
 import DependenciesTestSupport
+import EnvironmentVariables
 import Foundation
 import Mailgun_Live
 import Mailgun_Messages_Live
@@ -18,161 +19,164 @@ import FoundationNetworking
 
 // MARK: - README Line 103-125: Basic Usage with Messages Client
 
-@Suite("README Basic Usage - Lines 103-125")
+@Suite(
+    "README Basic Usage - Lines 103-125",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeBasicUsageTests {
     @Test("Basic email sending with Messages client")
-    func testBasicUsage() async throws {
+    func testBasicUsage() throws {
         // This validates the README example starting at line 103
         // import Dependencies
         // import Mailgun_Messages_Live
 
-        // Mock the dependency for compilation test
-        try await withDependencies {
-            $0.context = .test
-        } operation: {
-            @Dependency(Mailgun.Messages.self) var messages
+        @Dependency(Mailgun.Messages.self) var messages
 
-            func sendWelcomeEmail(to email: EmailAddress) async throws {
-                let request = Mailgun.Messages.Send.Request(
-                    from: try .init("welcome@yourdomain.com"),
-                    to: [email],
-                    subject: "Welcome!",
-                    html: """
-                        <h1>Welcome to our service!</h1>
-                        <p>We're excited to have you on board.</p>
-                    """,
-                    text: "Welcome to our service! We're excited to have you on board."
-                )
+        func sendWelcomeEmail(to email: EmailAddress) throws {
+            let request = Mailgun.Messages.Send.Request(
+                from: try .init("welcome@yourdomain.com"),
+                to: [email],
+                subject: "Welcome!",
+                html: """
+                    <h1>Welcome to our service!</h1>
+                    <p>We're excited to have you on board.</p>
+                """,
+                text: "Welcome to our service! We're excited to have you on board."
+            )
 
-                // Verify request is properly formed
-                #expect(request.from.rawValue == "welcome@yourdomain.com")
-                #expect(request.subject == "Welcome!")
-                #expect(request.html != nil)
-                #expect(request.text != nil)
-            }
-
-            // Test compiles and request can be created
-            try await sendWelcomeEmail(to: try .init("test@example.com"))
+            // Verify request is properly formed
+            #expect(request.from.rawValue == "welcome@yourdomain.com")
+            #expect(request.subject == "Welcome!")
+            #expect(request.html != nil)
+            #expect(request.text != nil)
         }
+
+        // Test compiles and request can be created
+        try sendWelcomeEmail(to: try .init("test@example.com"))
     }
 }
 
 // MARK: - README Line 129-152: Unified Client Usage
 
-@Suite("README Unified Client - Lines 129-152")
+@Suite(
+    "README Unified Client - Lines 129-152",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeUnifiedClientTests {
     @Test("Using the unified Mailgun client")
-    func testUnifiedClient() async throws {
+    func testUnifiedClient() throws {
         // This validates the README example starting at line 129
-        try await withDependencies {
-            $0.context = .test
-        } operation: {
-            @Dependency(\.mailgun) var mailgun
+        @Dependency(\.mailgun) var mailgun
 
-            func example() async throws {
-                // Send a message
-                let sendRequest = Mailgun.Messages.Send.Request(
-                    from: try .init("noreply@yourdomain.com"),
-                    to: [try .init("user@example.com")],
-                    subject: "Hello",
-                    text: "Hello from Mailgun!"
-                )
+        func example() throws {
+            // Send a message
+            let sendRequest = Mailgun.Messages.Send.Request(
+                from: try .init("noreply@yourdomain.com"),
+                to: [try .init("user@example.com")],
+                subject: "Hello",
+                text: "Hello from Mailgun!"
+            )
 
-                // Verify request structure
-                #expect(sendRequest.from.rawValue == "noreply@yourdomain.com")
-                #expect(sendRequest.subject == "Hello")
-                #expect(sendRequest.text == "Hello from Mailgun!")
+            // Verify request structure
+            #expect(sendRequest.from.rawValue == "noreply@yourdomain.com")
+            #expect(sendRequest.subject == "Hello")
+            #expect(sendRequest.text == "Hello from Mailgun!")
 
-                // Verify client structure exists (compilation test)
-                _ = mailgun.client.messages
-                _ = mailgun.client.domains
-                _ = mailgun.client.suppressions
-            }
-
-            try await example()
+            // Verify client structure exists (compilation test)
+            _ = mailgun.client.messages
+            _ = mailgun.client.domains
+            _ = mailgun.client.suppressions
         }
+
+        try example()
     }
 }
 
 // MARK: - README Line 159-179: Templates with Variables
 
-@Suite("README Templates - Lines 159-179")
+@Suite(
+    "README Templates - Lines 159-179",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeTemplatesTests {
     @Test("Templates with variables")
-    func testTemplatesWithVariables() async throws {
+    func testTemplatesWithVariables() throws {
         // This validates the README example starting at line 159
-        try await withDependencies {
-            $0.context = .test
-        } operation: {
-            @Dependency(Mailgun.Messages.self) var messages
+        @Dependency(Mailgun.Messages.self) var messages
 
-            let templateVariables = """
-            {
-                "customer_name": "John Doe",
-                "order_id": "12345",
-                "total": "$99.99"
-            }
-            """
-
-            let request = Mailgun.Messages.Send.Request(
-                from: try .init("noreply@yourdomain.com"),
-                to: [try .init("user@example.com")],
-                subject: "Your Order",
-                template: "order-confirmation",
-                templateVersion: "v2",
-                templateVariables: templateVariables
-            )
-
-            // Verify template configuration
-            #expect(request.template == "order-confirmation")
-            #expect(request.templateVersion == "v2")
-            #expect(request.templateVariables != nil)
+        let templateVariables = """
+        {
+            "customer_name": "John Doe",
+            "order_id": "12345",
+            "total": "$99.99"
         }
+        """
+
+        let request = Mailgun.Messages.Send.Request(
+            from: try .init("noreply@yourdomain.com"),
+            to: [try .init("user@example.com")],
+            subject: "Your Order",
+            template: "order-confirmation",
+            templateVersion: "v2",
+            templateVariables: templateVariables
+        )
+
+        // Verify template configuration
+        #expect(request.template == "order-confirmation")
+        #expect(request.templateVersion == "v2")
+        #expect(request.templateVariables != nil)
     }
 }
 
 // MARK: - README Line 184-206: Batch Sending with Recipient Variables
 
-@Suite("README Batch Sending - Lines 184-206")
+@Suite(
+    "README Batch Sending - Lines 184-206",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeBatchSendingTests {
     @Test("Batch sending with recipient variables")
-    func testBatchSending() async throws {
+    func testBatchSending() throws {
         // This validates the README example starting at line 184
-        try await withDependencies {
-            $0.context = .test
-        } operation: {
-            @Dependency(Mailgun.Messages.self) var messages
+        @Dependency(Mailgun.Messages.self) var messages
 
-            let recipientVariables = try String(
-                data: JSONEncoder().encode([
-                    "alice@example.com": ["name": "Alice", "code": "ALICE20"],
-                    "bob@example.com": ["name": "Bob", "code": "BOB15"]
-                ]),
-                encoding: .utf8
-            )!
+        let recipientVariables = try String(
+            data: JSONEncoder().encode([
+                "alice@example.com": ["name": "Alice", "code": "ALICE20"],
+                "bob@example.com": ["name": "Bob", "code": "BOB15"]
+            ]),
+            encoding: .utf8
+        )!
 
-            let request = Mailgun.Messages.Send.Request(
-                from: try .init("newsletter@yourdomain.com"),
-                to: [
-                    try .init("alice@example.com"),
-                    try .init("bob@example.com")
-                ],
-                subject: "Hello %recipient.name%!",
-                html: "<p>Special offer: Use code %recipient.code%</p>",
-                recipientVariables: recipientVariables
-            )
+        let request = Mailgun.Messages.Send.Request(
+            from: try .init("newsletter@yourdomain.com"),
+            to: [
+                try .init("alice@example.com"),
+                try .init("bob@example.com")
+            ],
+            subject: "Hello %recipient.name%!",
+            html: "<p>Special offer: Use code %recipient.code%</p>",
+            recipientVariables: recipientVariables
+        )
 
-            // Verify batch configuration
-            #expect(request.to.count == 2)
-            #expect(request.recipientVariables != nil)
-            #expect(request.subject.contains("%recipient.name%"))
-        }
+        // Verify batch configuration
+        #expect(request.to.count == 2)
+        #expect(request.recipientVariables != nil)
+        #expect(request.subject.contains("%recipient.name%"))
     }
 }
 
 // MARK: - README Line 210-224: Scheduled Delivery
 
-@Suite("README Scheduled Delivery - Lines 210-224")
+@Suite(
+    "README Scheduled Delivery - Lines 210-224",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeScheduledDeliveryTests {
     @Test("Scheduled delivery")
     func testScheduledDelivery() throws {
@@ -197,7 +201,11 @@ struct ReadmeScheduledDeliveryTests {
 
 // MARK: - README Line 229-248: Attachments
 
-@Suite("README Attachments - Lines 229-248")
+@Suite(
+    "README Attachments - Lines 229-248",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeAttachmentsTests {
     @Test("Email with attachments")
     func testAttachments() throws {
@@ -229,7 +237,11 @@ struct ReadmeAttachmentsTests {
 
 // MARK: - README Line 253-271: Suppression Management
 
-@Suite("README Suppressions - Lines 253-271")
+@Suite(
+    "README Suppressions - Lines 253-271",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeSuppressionsTests {
     @Test("Suppression management")
     func testSuppressionManagement() throws {
@@ -260,7 +272,11 @@ struct ReadmeSuppressionsTests {
 
 // MARK: - README Line 276-283: Analytics & Reporting
 
-@Suite("README Analytics - Lines 276-283")
+@Suite(
+    "README Analytics - Lines 276-283",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeAnalyticsTests {
     @Test("Analytics and reporting")
     func testAnalytics() throws {
@@ -275,7 +291,11 @@ struct ReadmeAnalyticsTests {
 
 // MARK: - README Line 304-330: Testing Example
 
-@Suite("README Testing Example - Lines 304-330")
+@Suite(
+    "README Testing Example - Lines 304-330",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeTestingExampleTests {
     @Test("Testing example from README")
     func testTestingExample() throws {
@@ -299,7 +319,11 @@ struct ReadmeTestingExampleTests {
 
 // MARK: - Additional Verification Tests
 
-@Suite("README Module Imports Verification")
+@Suite(
+    "README Module Imports Verification",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeModuleImportsTests {
     @Test("Verify module imports compile")
     func testModuleImports() throws {
@@ -320,7 +344,11 @@ struct ReadmeModuleImportsTests {
     }
 }
 
-@Suite("README Type Safety Verification")
+@Suite(
+    "README Type Safety Verification",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeTypeSafetyTests {
     @Test("EmailAddress type safety")
     func testEmailAddressTypeSafety() throws {
@@ -350,7 +378,11 @@ struct ReadmeTypeSafetyTests {
     }
 }
 
-@Suite("README Client Structure Verification")
+@Suite(
+    "README Client Structure Verification",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development)
+)
 struct ReadmeClientStructureTests {
     @Test("Unified client structure")
     func testUnifiedClientStructure() throws {
