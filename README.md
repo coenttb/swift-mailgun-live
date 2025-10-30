@@ -1,97 +1,46 @@
 # swift-mailgun-live
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Swift-6.0-orange.svg" alt="Swift 6.0">
-  <img src="https://img.shields.io/badge/Platforms-macOS%2014%2B%20|%20iOS%2017%2B-lightgray.svg" alt="Platforms">
-  <img src="https://img.shields.io/badge/Tests-238%20Passing-brightgreen.svg" alt="Tests">
-  <img src="https://img.shields.io/badge/Coverage-100%25%20APIs-brightgreen.svg" alt="API Coverage">
-  <img src="https://img.shields.io/badge/License-AGPL--3.0%20|%20Commercial-blue.svg" alt="License">
-  <img src="https://img.shields.io/badge/Status-Production%20Ready-green.svg" alt="Status">
-  <img src="https://img.shields.io/badge/Version-0.1.0-brightgreen.svg" alt="Version">
-</p>
+[![CI](https://github.com/coenttb/swift-mailgun-live/workflows/CI/badge.svg)](https://github.com/coenttb/swift-mailgun-live/actions/workflows/ci.yml)
+![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
-<p align="center">
-  <strong>Live implementation layer for swift-mailgun-types</strong><br>
-  Production-ready URLSession networking with comprehensive API coverage
-</p>
+Live implementation layer for swift-mailgun-types providing URLSession-based networking with complete API coverage.
 
 ## Overview
 
-**swift-mailgun-live** provides the production-ready, live implementations for the types and interfaces defined in [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types). This package transforms the type-safe contracts into a fully functional Mailgun SDK with URLSession-based networking, authentication, and comprehensive test coverage.
+**swift-mailgun-live** provides production-ready implementations for the types and interfaces defined in [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types). This package transforms type-safe contracts into a fully functional Mailgun SDK with URLSession-based networking, authentication, and dependency injection.
 
-> **Note:** For most users, we recommend using [swift-mailgun](https://github.com/coenttb/swift-mailgun) which provides a complete, user-friendly package that includes this implementation along with additional integrations for SwiftUI, HTML rendering, and more.
-
-```swift
-// Direct usage (for advanced users)
-import Mailgun  // from swift-mailgun-live
-
-@Dependency(\.mailgun) var mailgun
-
-// Send a simple email
-let request = Mailgun.Messages.Send.Request(
-    from: try .init("hello@yourdomain.com"),
-    to: [try .init("user@example.com")],
-    subject: "Modern, type-safe Swift SDK for Mailgun!",
-    html: "<h1>Production-ready</h1><p>Fully tested</p>"
-)
-
-let response = try await mailgun.client.messages.send(request)
-print("Email sent: \(response.id) ✅")
-```
+> **Note:** For most users, we recommend using [swift-mailgun](https://github.com/coenttb/swift-mailgun) which provides a complete package including this implementation along with additional integrations.
 
 ## Features
 
-### 🚀 Production Ready
-- **URLSession-based networking** with robust error handling
-- **Basic Authentication** via swift-authenticating
-- **Environment configuration** via swift-environment-variables
-- **Dependency injection** via swift-dependencies
-- **Swift 6 language mode** with complete concurrency support
+### Production Ready
+- URLSession-based networking with robust error handling
+- Basic Authentication via swift-authenticating
+- Environment configuration via swift-environment-variables
+- Dependency injection via swift-dependencies
+- Swift 6 language mode with complete concurrency support
 
-### 📋 Complete API Coverage
+### Complete API Coverage
 
-| Feature | Implementation | Tests | Status |
-|---------|:--------------:|:-----:|:------:|
-| **Messages** | ✅ | ✅ | Production |
-| **Domains** | ✅ | ✅ | Production |
-| ├─ DKIM Security | ✅ | ✅ | Ready |
-| ├─ Connection Settings | ✅ | ✅ | Ready |
-| ├─ Domain Keys | ✅ | ✅ | Ready |
-| └─ Tracking Settings | ✅ | ✅ | Ready |
-| **Suppressions** | ✅ | ✅ | Production |
-| ├─ Bounces | ✅ | ✅ | Ready |
-| ├─ Complaints | ✅ | ✅ | Ready |
-| ├─ Unsubscribes | ✅ | ✅ | Ready |
-| └─ Allowlist | ✅ | ✅ | Ready |
-| **Reporting** | ✅ | ✅ | Production |
-| ├─ Events | ✅ | ✅ | Ready |
-| ├─ Stats | ✅ | ✅ | Ready |
-| ├─ Metrics | ✅ | ✅ | Ready |
-| ├─ Tags | ✅ | ✅ | Ready |
-| └─ Logs | ✅ | ✅ | Ready |
-| **Templates** | ✅ | ✅ | Production |
-| **Webhooks** | ✅ | ✅ | Production |
-| **Mailing Lists** | ✅ | ✅ | Production |
-| **Routes** | ✅ | ✅ | Ready |
-| **IP Management** | ✅ | ✅ | Ready |
-| ├─ IPs | ✅ | ✅ | Ready |
-| ├─ IP Pools | ✅ | ✅ | Ready |
-| └─ IP Allowlist | ✅ | ✅ | Ready |
-| **Account Management** | ✅ | ✅ | Ready |
-| ├─ Subaccounts | ✅ | ✅ | Ready |
-| ├─ Users | ✅ | ✅ | Ready |
-| ├─ Credentials | ✅ | ✅ | Ready |
-| ├─ Keys | ✅ | ✅ | Ready |
-| └─ Message Limits | ✅ | ✅ | Ready |
+All Mailgun API features are implemented with comprehensive test coverage:
 
-**Legend**: Production = Used in production | Ready = Fully tested and ready for production use
+- **Messages**: Send emails with attachments, templates, and recipient variables
+- **Domains**: Domain management, DKIM, connection settings, tracking
+- **Suppressions**: Bounces, complaints, unsubscribes, allowlist
+- **Reporting**: Events, stats, metrics, tags, logs
+- **Templates**: Email template management
+- **Webhooks**: Webhook configuration and management
+- **Mailing Lists**: List and member management
+- **Routes**: Email routing rules
+- **IP Management**: IPs, IP pools, IP allowlist
+- **Account Management**: Subaccounts, users, credentials, keys, message limits
 
-### 🛡️ Type Safety & Modern Swift
-- **Type-safe API** with compile-time validation
-- **Swift concurrency** with async/await throughout
-- **@Sendable closures** for thread-safe operations
-- **Structured concurrency** support
-- **Swift Testing framework** for comprehensive test coverage
+### Type Safety & Modern Swift
+- Type-safe API with compile-time validation
+- Swift concurrency with async/await throughout
+- @Sendable closures for thread-safe operations
+- Structured concurrency support
+- Swift Testing framework for comprehensive test coverage
 
 ## Installation
 
@@ -146,24 +95,22 @@ MAILGUN_DOMAIN=mg.yourdomain.com
 # Optional (for testing)
 MAILGUN_FROM_EMAIL=noreply@yourdomain.com
 MAILGUN_TO_EMAIL=test@example.com
-MAILGUN_TEST_MAILINGLIST=newsletter@mg.yourdomain.com
-MAILGUN_TEST_RECIPIENT=subscriber@example.com
 ```
 
 ### Basic Usage
 
 ```swift
 import Dependencies
-import Mailgun
+import Mailgun_Messages_Live
 
-// Access the client via dependency injection
-@Dependency(\.mailgun) var mailgun
+// Access the messages client via dependency injection
+@Dependency(Mailgun.Messages.self) var messages
 
 // Send a simple email
 func sendWelcomeEmail(to email: EmailAddress) async throws {
     let request = Mailgun.Messages.Send.Request(
-        from: .init("welcome@yourdomain.com"),
-        to: [.init(email)],
+        from: try .init("welcome@yourdomain.com"),
+        to: [try .init(email)],
         subject: "Welcome!",
         html: """
             <h1>Welcome to our service!</h1>
@@ -171,228 +118,173 @@ func sendWelcomeEmail(to email: EmailAddress) async throws {
         """,
         text: "Welcome to our service! We're excited to have you on board."
     )
-    
-    let response = try await mailgun.client.messages.send(request)
+
+    let response = try await messages.client.send(request)
     print("Welcome email sent: \(response.id)")
 }
 ```
 
-### Advanced Features
-
-#### Templates with Variables
+### Using the Unified Client
 
 ```swift
-let request = Mailgun.Messages.Send.Request(
-    from: .init("noreply@yourdomain.com"),
-    to: [.init("user@example.com")],
-    subject: "Your Order #{{order_id}}",
-    template: "order-confirmation",
-    templateVariables: [
-        "customer_name": "John Doe",
-        "order_id": "12345",
-        "total": "$99.99",
-        "items": ["Swift Book", "Mailgun Guide"]
-    ],
-    templateVersion: "v2"
-)
+import Dependencies
+import Mailgun_Live
 
-let response = try await mailgun.client.messages.send(request)
+// Access all Mailgun features through the unified client
+@Dependency(\.mailgun) var mailgun
+
+func example() async throws {
+    // Send a message
+    let sendRequest = Mailgun.Messages.Send.Request(
+        from: try .init("noreply@yourdomain.com"),
+        to: [try .init("user@example.com")],
+        subject: "Hello",
+        text: "Hello from Mailgun!"
+    )
+    let sendResponse = try await mailgun.client.messages.send(sendRequest)
+
+    // List domains
+    let domainsResponse = try await mailgun.client.domains.list()
+
+    // Check suppressions
+    let bouncesResponse = try await mailgun.client.suppressions.bounces.list()
+}
 ```
 
-#### Batch Sending with Recipient Variables
+## Usage Examples
+
+### Templates with Variables
 
 ```swift
+@Dependency(Mailgun.Messages.self) var messages
+
+let templateVariables = """
+{
+    "customer_name": "John Doe",
+    "order_id": "12345",
+    "total": "$99.99"
+}
+"""
+
 let request = Mailgun.Messages.Send.Request(
-    from: .init("newsletter@yourdomain.com"),
+    from: try .init("noreply@yourdomain.com"),
+    to: [try .init("user@example.com")],
+    subject: "Your Order",
+    template: "order-confirmation",
+    templateVersion: "v2",
+    templateVariables: templateVariables
+)
+
+let response = try await messages.client.send(request)
+```
+
+### Batch Sending with Recipient Variables
+
+```swift
+@Dependency(Mailgun.Messages.self) var messages
+
+let recipientVariables = try String(
+    data: JSONEncoder().encode([
+        "alice@example.com": ["name": "Alice", "code": "ALICE20"],
+        "bob@example.com": ["name": "Bob", "code": "BOB15"]
+    ]),
+    encoding: .utf8
+)!
+
+let request = Mailgun.Messages.Send.Request(
+    from: try .init("newsletter@yourdomain.com"),
     to: [
-        .init("alice@example.com"),
-        .init("bob@example.com"),
-        .init("charlie@example.com")
+        try .init("alice@example.com"),
+        try .init("bob@example.com")
     ],
     subject: "Hello %recipient.name%!",
-    html: "<p>Special offer just for %recipient.name%: Use code %recipient.code%</p>",
-    recipientVariables: [
-        "alice@example.com": ["name": "Alice", "code": "ALICE20"],
-        "bob@example.com": ["name": "Bob", "code": "BOB15"],
-        "charlie@example.com": ["name": "Charlie", "code": "CHARLIE25"]
-    ]
+    html: "<p>Special offer: Use code %recipient.code%</p>",
+    recipientVariables: recipientVariables
 )
+
+let response = try await messages.client.send(request)
 ```
 
-#### Scheduled Delivery
+### Scheduled Delivery
 
 ```swift
+@Dependency(Mailgun.Messages.self) var messages
+
 let deliveryTime = Date().addingTimeInterval(3600) // 1 hour from now
 
 let request = Mailgun.Messages.Send.Request(
-    from: .init("reminder@yourdomain.com"),
-    to: [.init("user@example.com")],
+    from: try .init("reminder@yourdomain.com"),
+    to: [try .init("user@example.com")],
     subject: "Reminder: Meeting in 1 hour",
     text: "Don't forget about your meeting!",
     deliveryTime: deliveryTime
 )
+
+let response = try await messages.client.send(request)
 ```
 
-#### Attachments
+### Attachments
 
 ```swift
-let attachment = Mailgun.Messages.Attachment(
-    filename: "report.pdf",
+@Dependency(Mailgun.Messages.self) var messages
+
+let reportData = Data("Sample report content".utf8)
+
+let attachment = Mailgun.Messages.Attachment.Data(
     data: reportData,
+    filename: "report.pdf",
     contentType: "application/pdf"
 )
 
 let request = Mailgun.Messages.Send.Request(
-    from: .init("reports@yourdomain.com"),
-    to: [.init("manager@example.com")],
+    from: try .init("reports@yourdomain.com"),
+    to: [try .init("manager@example.com")],
     subject: "Monthly Report",
     html: "<p>Please find the monthly report attached.</p>",
-    attachment: [attachment]
+    attachments: [attachment]
 )
+
+let response = try await messages.client.send(request)
 ```
 
 ### Suppression Management
 
 ```swift
+@Dependency(\.mailgun) var mailgun
+
 // Check if an email is bounced
 let bounces = try await mailgun.client.suppressions.bounces.list()
-let isBounced = bounces.items.contains { $0.address == "user@example.com" }
+let isBounced = bounces.items.contains { $0.address.rawValue == "user@example.com" }
 
 // Add to unsubscribe list
-try await mailgun.client.suppressions.unsubscribes.create(
-    address: "user@example.com",
-    tag: "newsletter"
+try await mailgun.client.suppressions.unsubscribe.create(
+    .init(
+        address: try .init("user@example.com"),
+        tags: ["newsletter"]
+    )
 )
 
 // Allowlist an important address
 try await mailgun.client.suppressions.Allowlist.create(
-    address: "vip@partner.com",
-    reason: "Important business partner"
+    .address(try .init("vip@partner.com"))
 )
 ```
 
 ### Analytics & Reporting
 
 ```swift
-// Get delivery statistics
-let stats = try await mailgun.client.stats.total(
-    event: .delivered,
-    start: Date().addingTimeInterval(-7 * 24 * 3600), // Last 7 days
-    resolution: .day
-)
+@Dependency(\.mailgun) var mailgun
+
+// Get domain tags
+let tags = try await mailgun.client.reporting.tags.list()
 
 // Search events
-let events = try await mailgun.client.events.search(
-    recipient: "user@example.com",
-    limit: 50
-)
-
-// Get metrics
-let metrics = try await mailgun.client.metrics.query(
-    metrics: [.deliverability.deliveredRate],
-    start: Date().addingTimeInterval(-30 * 24 * 3600),
-    resolution: .day
-)
-```
-
-## Integration Examples
-
-### With Vapor
-
-```swift
-import Vapor
-import Mailgun
-import Dependencies
-
-extension Request {
-    var mailgun: Mailgun.Client.Authenticated {
-        @Dependency(\.mailgun) var mailgun
-        return mailgun
-    }
-}
-
-func routes(_ app: Application) throws {
-    app.post("send-welcome") { req async throws -> HTTPStatus in
-        let user = try req.content.decode(User.self)
-        
-        @Dependency(\.mailgun) var mailgun
-        
-        let email = Mailgun.Messages.Send.Request(
-            from: .init("welcome@app.com"),
-            to: [.init(user.email)],
-            subject: "Welcome to our app!",
-            template: "welcome",
-            templateVariables: [
-                "name": user.name,
-                "activation_link": "https://app.com/activate/\(user.id)"
-            ]
-        )
-        
-        try await mailgun.client.messages.send(email)
-        return .ok
-    }
-}
-```
-
-### With SwiftUI
-
-```swift
-import SwiftUI
-import Dependencies
-import Mailgun
-
-@MainActor
-@Observable
-class ContactViewModel {
-    @ObservationIgnored
-    @Dependency(\.mailgun) var mailgun
-    
-    var isLoading = false
-    var message = ""
-    var error: Error?
-    
-    func sendContactForm(name: String, email: EmailAddress, message: String) async {
-        isLoading = true
-        defer { isLoading = false }
-        
-        do {
-            let request = Mailgun.Messages.Send.Request(
-                from: .init(email),
-                to: [.init("contact@company.com")],
-                subject: "Contact Form: \(name)",
-                text: message,
-                replyTo: .init(email)
-            )
-            
-            let response = try await mailgun.client.messages.send(request)
-            self.message = "Message sent successfully!"
-        } catch {
-            self.error = error
-        }
-    }
-}
+let events = try await mailgun.client.reporting.events.list()
 ```
 
 ## Testing
 
-The SDK includes comprehensive test coverage with **238 tests** - all passing! ✅
-
-### Test Coverage
-
-| Category | Tests | Status |
-|----------|------:|:------:|
-| **Messages** | 45 | ✅ |
-| **Suppressions** | 28 | ✅ |
-| **Domains** | 22 | ✅ |
-| **Templates** | 15 | ✅ |
-| **Webhooks** | 12 | ✅ |
-| **Routes** | 10 | ✅ |
-| **Lists** | 18 | ✅ |
-| **IP Management** | 25 | ✅ |
-| **Reporting** | 20 | ✅ |
-| **Account Management** | 15 | ✅ |
-| **Other Features** | 28 | ✅ |
-| **Total** | **238** | **100% Passing** |
+The SDK includes comprehensive test coverage using Swift Testing framework with dependency injection.
 
 ### Test Configuration
 
@@ -408,12 +300,10 @@ MAILGUN_TO_EMAIL=authorized@sandbox-domain.mailgun.org
 
 ### Writing Tests
 
-The SDK uses Swift Testing framework with dependency injection:
-
 ```swift
 import Testing
 import DependenciesTestSupport
-import Mailgun
+import Mailgun_Messages_Live
 
 @Suite(
     "Email Tests",
@@ -423,44 +313,21 @@ import Mailgun
 struct EmailTests {
     @Test("Send test email")
     func testSendEmail() async throws {
-        @Dependency(\.mailgun) var mailgun
-        
+        @Dependency(Mailgun.Messages.self) var messages
+
         let request = Mailgun.Messages.Send.Request(
-            from: .init("test@yourdomain.com"),
-            to: [.init("authorized@yourdomain.com")],
+            from: try .init("test@yourdomain.com"),
+            to: [try .init("authorized@yourdomain.com")],
             subject: "Test Email",
             text: "This is a test",
             testMode: true  // Won't actually send
         )
-        
-        let response = try await mailgun.client.messages.send(request)
+
+        let response = try await messages.client.send(request)
         #expect(response.message.contains("Queued"))
     }
 }
 ```
-
-### Sandbox Testing
-
-For sandbox domains, ensure you've added authorized recipients:
-
-```swift
-// Helper to get authorized sandbox recipients
-func getAuthorizedRecipients() async throws -> [EmailAddress] {
-    @Dependency(\.mailgun) var mailgun
-    
-    let response = try await mailgun.client.accountManagement.getSandboxAuthRecipients()
-    return response.recipients
-        .filter(\.activated)
-        .map(\.email)
-}
-```
-
-### Test Utilities
-
-The package includes helpful test utilities:
-
-- **Sandbox Reset Test**: Clean up test data while preserving authorized recipients
-- **Integration Tests**: Real API tests with authorized recipients
 
 ## Architecture
 
@@ -468,7 +335,7 @@ The package includes helpful test utilities:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                   swift-mailgun                       │
+│                   swift-mailgun                         │
 │         (User-facing package with integrations)         │
 │                                                         │
 │  • SwiftUI components                                   │
@@ -510,9 +377,13 @@ The package includes helpful test utilities:
 - **Error Handling**: Comprehensive error types with detailed messages
 - **Testing**: Real API integration tests with test mode support
 
-## Contributing
+## Related Packages
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types) - Type definitions and interfaces for Mailgun API
+- [swift-mailgun](https://github.com/coenttb/swift-mailgun) - Complete Mailgun SDK with integrations
+- [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) - Dependency injection framework
+- [swift-authenticating](https://github.com/coenttb/swift-authenticating) - Authentication utilities
+- [swift-environment-variables](https://github.com/coenttb/swift-environment-variables) - Environment variable management
 
 ## Example Projects
 
@@ -520,6 +391,10 @@ See the Mailgun SDK ecosystem in action:
 
 - [coenttb.com](https://github.com/coenttb/coenttb-com-server) - Production website using swift-mailgun
 - [coenttb-newsletter](https://github.com/coenttb/coenttb-newsletter) - Newsletter system built with swift-mailgun
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Support
 
@@ -531,14 +406,14 @@ See the Mailgun SDK ecosystem in action:
 
 ## License
 
-This project is available under **dual licensing**:
+This project is available under dual licensing:
 
 ### Open Source License
-**GNU Affero General Public License v3.0 (AGPL-3.0)**  
+**GNU Affero General Public License v3.0 (AGPL-3.0)**
 Free for open source projects. See [LICENSE](LICENSE) for details.
 
 ### Commercial License
-For proprietary/commercial use without AGPL restrictions.  
+For proprietary/commercial use without AGPL restrictions.
 Contact **info@coenttb.com** for licensing options.
 
 ---
