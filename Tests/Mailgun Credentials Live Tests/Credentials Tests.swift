@@ -149,11 +149,11 @@ struct MailgunCredentialsTests {
      )
      _ = try await credentials.client.create(domain, createRequest)
      }
-    
+
      // Delete all credentials
      let deleteResponse = try await credentials.client.deleteAll(domain)
      #expect(deleteResponse.message.contains("Deleted") || deleteResponse.message.contains("removed"))
-    
+
      // Verify all are deleted
      let listResponse = try await credentials.client.list(domain)
      #expect(listResponse.totalCount == 0)

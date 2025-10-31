@@ -47,23 +47,23 @@ struct MailgunCustomMessageLimitTests {
     // Uncomment only for testing in a dedicated test environment
     /*
     let testLimit = 10000
-    
+
     // Set monthly limit
     let setRequest = Mailgun.CustomMessageLimit.Monthly.Set.Request(
         limit: testLimit
     )
-    
+
     let setResponse = try await customMessageLimit.client.setMonthlyLimit(setRequest)
     #expect(setResponse.success == true)
-    
+
     // Get the limit to verify it was set
     let getResponse = try await customMessageLimit.client.getMonthlyLimit()
     #expect(getResponse.limit == testLimit)
-    
+
     // Delete the limit (restore default)
     let deleteResponse = try await customMessageLimit.client.deleteMonthlyLimit()
     #expect(deleteResponse.success == true)
-    
+
     // Verify it was deleted
     let finalResponse = try await customMessageLimit.client.getMonthlyLimit()
     #expect(finalResponse.limit != testLimit)
