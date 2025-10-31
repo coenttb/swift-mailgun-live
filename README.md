@@ -410,11 +410,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Support
 
-- 🐛 [Issues](https://github.com/coenttb/swift-mailgun-live/issues) - Report bugs or request features
-- 💬 [Discussions](https://github.com/coenttb/swift-mailgun-live/discussions) - Ask questions
-- 📧 [Newsletter](http://coenttb.com/en/newsletter/subscribe) - Get updates
-- 🐦 [X (Twitter)](http://x.com/coenttb) - Follow for news
-- 💼 [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Connect
+- [Issues](https://github.com/coenttb/swift-mailgun-live/issues) - Report bugs or request features
+- [Discussions](https://github.com/coenttb/swift-mailgun-live/discussions) - Ask questions
+- [Newsletter](http://coenttb.com/en/newsletter/subscribe) - Get updates
+- [X (Twitter)](http://x.com/coenttb) - Follow for news
+- [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Connect
 
 ## License
 
@@ -431,5 +431,5 @@ Contact **info@coenttb.com** for licensing options.
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://coenttb.com">coenttb</a>
+  Made by <a href="https://coenttb.com">coenttb</a>
 </p>
