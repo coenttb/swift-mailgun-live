@@ -379,11 +379,23 @@ struct EmailTests {
 
 ## Related Packages
 
-- [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types) - Type definitions and interfaces for Mailgun API
-- [swift-mailgun](https://github.com/coenttb/swift-mailgun) - Complete Mailgun SDK with integrations
-- [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) - Dependency injection framework
-- [swift-authenticating](https://github.com/coenttb/swift-authenticating) - Authentication utilities
-- [swift-environment-variables](https://github.com/coenttb/swift-environment-variables) - Environment variable management
+### Dependencies
+
+- [swift-authenticating](https://github.com/coenttb/swift-authenticating): A Swift package for type-safe HTTP authentication with URL routing integration.
+- [swift-environment-variables](https://github.com/coenttb/swift-environment-variables): A Swift package for type-safe environment variable management.
+- [swift-mailgun-types](https://github.com/coenttb/swift-mailgun-types): A Swift package with foundational types for Mailgun.
+- [swift-url-form-coding](https://github.com/coenttb/swift-url-form-coding): A Swift package for type-safe web form encoding and decoding.
+- [swift-urlrequest-handler](https://github.com/coenttb/swift-urlrequest-handler): A Swift package for URLRequest handling with structured error handling.
+
+### Used By
+
+- [swift-mailgun](https://github.com/coenttb/swift-mailgun): The Swift library for the Mailgun API.
+
+### Third-Party Dependencies
+
+- [pointfreeco/swift-dependencies](https://github.com/pointfreeco/swift-dependencies): A dependency management library for controlling dependencies in Swift.
+- [pointfreeco/swift-url-routing](https://github.com/pointfreeco/swift-url-routing): A bidirectional URL router with more type safety and less fuss.
+- [pointfreeco/xctest-dynamic-overlay](https://github.com/pointfreeco/xctest-dynamic-overlay): Define XCTest assertion helpers directly in production code.
 
 ## Example Projects
 
