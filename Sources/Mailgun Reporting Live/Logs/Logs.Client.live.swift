@@ -12,34 +12,34 @@ import IssueReporting
 @_exported import Mailgun_Shared_Live
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 extension Mailgun.Reporting.Logs.Client {
-  public static func live(
-    makeRequest: @escaping @Sendable (_ route: Mailgun.Reporting.Logs.API) throws -> URLRequest
-  ) -> Self {
-    @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
-    @Dependency(\.envVars.mailgun.domain) var domain
+    public static func live(
+        makeRequest: @escaping @Sendable (_ route: Mailgun.Reporting.Logs.API) throws -> URLRequest
+    ) -> Self {
+        @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
+        @Dependency(\.envVars.mailgun.domain) var domain
 
-    return Self()
-  }
+        return Self()
+    }
 }
 
 extension Mailgun.Reporting.Logs {
-  public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
-    Mailgun.Reporting.Logs.API,
-    Mailgun.Reporting.Logs.API.Router,
-    Mailgun.Reporting.Logs.Client
-  >
+    public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
+        Mailgun.Reporting.Logs.API,
+        Mailgun.Reporting.Logs.API.Router,
+        Mailgun.Reporting.Logs.Client
+    >
 }
 
 extension Mailgun.Reporting.Logs: @retroactive DependencyKey {
-  public static var liveValue: Mailgun.Reporting.Logs.Authenticated {
-    try! Mailgun.Reporting.Logs.Authenticated { .live(makeRequest: $0) }
-  }
+    public static var liveValue: Mailgun.Reporting.Logs.Authenticated {
+        try! Mailgun.Reporting.Logs.Authenticated { .live(makeRequest: $0) }
+    }
 }
 
 extension Mailgun.Reporting.Logs.API.Router: @retroactive DependencyKey {
-  public static let liveValue: Mailgun.Reporting.Logs.API.Router = .init()
+    public static let liveValue: Mailgun.Reporting.Logs.API.Router = .init()
 }

@@ -12,135 +12,135 @@ import Mailgun_Suppressions_Live
 import Testing
 
 @Suite(
-  "Bounces Client Tests",
-  .dependency(\.context, .live),
-  .dependency(\.envVars, .development),
-  .serialized
+    "Bounces Client Tests",
+    .dependency(\.context, .live),
+    .dependency(\.envVars, .development),
+    .serialized
 )
 struct SuppressionsBouncesClientTests {
-  @Test("Should successfully create bounce record")
-  func testCreateBounceRecord() async throws {
-    @Dependency(Mailgun.Suppressions.self) var suppressions
+    @Test("Should successfully create bounce record")
+    func testCreateBounceRecord() async throws {
+        @Dependency(Mailgun.Suppressions.self) var suppressions
 
-    // Use a unique email address to avoid conflicts with Allowlist
-    // Note: Using test-bounces.com domain to avoid conflicts with Allowlisted example.com
-    let timestamp = Date().timeIntervalSince1970
-    let uniqueEmail = "bounce-test-\(Int(timestamp))@test-bounces.com"
+        // Use a unique email address to avoid conflicts with Allowlist
+        // Note: Using test-bounces.com domain to avoid conflicts with Allowlisted example.com
+        let timestamp = Date().timeIntervalSince1970
+        let uniqueEmail = "bounce-test-\(Int(timestamp))@test-bounces.com"
 
-    let request = Mailgun.Suppressions.Bounces.Create.Request(
-      address: try .init(uniqueEmail),
-      code: "550",
-      error: "Test error"
-    )
+        let request = Mailgun.Suppressions.Bounces.Create.Request(
+            address: try .init(uniqueEmail),
+            code: "550",
+            error: "Test error"
+        )
 
-    let response = try await suppressions.client.bounces.create(request)
+        let response = try await suppressions.client.bounces.create(request)
 
-    #expect(response.message == "Address has been added to the bounces table")
+        #expect(response.message == "Address has been added to the bounces table")
 
-    // Clean up - delete the bounce record we just created
-    _ = try? await suppressions.client.bounces.delete(try .init(uniqueEmail))
-  }
+        // Clean up - delete the bounce record we just created
+        _ = try? await suppressions.client.bounces.delete(try .init(uniqueEmail))
+    }
 
-  @Test("Should successfully import bounce list")
-  func testImportBounceList() async throws {
-    @Dependency(Mailgun.Suppressions.self) var suppressions
-    let timestamp = Int(Date().timeIntervalSince1970)
-    let csvContent = """
-      address, code, error, created_at
-      bounce-import1-\(timestamp)@test-bounces.com,,,
-      bounce-import2-\(timestamp)@test-bounces.com,,,
-      """
+    @Test("Should successfully import bounce list")
+    func testImportBounceList() async throws {
+        @Dependency(Mailgun.Suppressions.self) var suppressions
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let csvContent = """
+            address, code, error, created_at
+            bounce-import1-\(timestamp)@test-bounces.com,,,
+            bounce-import2-\(timestamp)@test-bounces.com,,,
+            """
 
-    let response = try await suppressions.client.bounces.importList(Data(csvContent.utf8))
+        let response = try await suppressions.client.bounces.importList(Data(csvContent.utf8))
 
-    #expect(response.message == "file uploaded successfully for processing. standby...")
-  }
-  @Test("Should successfully get bounce record")
-  func testGetBounceRecord() async throws {
-    @Dependency(Mailgun.Suppressions.self) var suppressions
-    //
-    // First create a bounce record to ensure it exists
-    let timestamp = Date().timeIntervalSince1970
-    let uniqueEmail = "bounce-get-test-\(Int(timestamp))@test-bounces.com"
+        #expect(response.message == "file uploaded successfully for processing. standby...")
+    }
+    @Test("Should successfully get bounce record")
+    func testGetBounceRecord() async throws {
+        @Dependency(Mailgun.Suppressions.self) var suppressions
+        //
+        // First create a bounce record to ensure it exists
+        let timestamp = Date().timeIntervalSince1970
+        let uniqueEmail = "bounce-get-test-\(Int(timestamp))@test-bounces.com"
 
-    let createRequest = Mailgun.Suppressions.Bounces.Create.Request(
-      address: try .init(uniqueEmail),
-      code: "550",
-      error: "Test error for get"
-    )
+        let createRequest = Mailgun.Suppressions.Bounces.Create.Request(
+            address: try .init(uniqueEmail),
+            code: "550",
+            error: "Test error for get"
+        )
 
-    _ = try await suppressions.client.bounces.create(createRequest)
+        _ = try await suppressions.client.bounces.create(createRequest)
 
-    // Now get the bounce record
-    let bounce = try await suppressions.client.bounces.get(try .init(uniqueEmail))
+        // Now get the bounce record
+        let bounce = try await suppressions.client.bounces.get(try .init(uniqueEmail))
 
-    #expect(bounce.address.address == uniqueEmail)
-    #expect(!bounce.code.isEmpty)
-    #expect(!bounce.createdAt.isEmpty)
+        #expect(bounce.address.address == uniqueEmail)
+        #expect(!bounce.code.isEmpty)
+        #expect(!bounce.createdAt.isEmpty)
 
-    // Clean up
-    _ = try? await suppressions.client.bounces.delete(try .init(uniqueEmail))
-  }
-  @Test("Should successfully list bounce records")
-  func testListBounceRecords() async throws {
-    @Dependency(Mailgun.Suppressions.self) var suppressions
+        // Clean up
+        _ = try? await suppressions.client.bounces.delete(try .init(uniqueEmail))
+    }
+    @Test("Should successfully list bounce records")
+    func testListBounceRecords() async throws {
+        @Dependency(Mailgun.Suppressions.self) var suppressions
 
-    // First create a bounce record to ensure there's something to list
-    let timestamp = Date().timeIntervalSince1970
-    let uniqueEmail = "bounce-list-test-\(Int(timestamp))@test-bounces.com"
+        // First create a bounce record to ensure there's something to list
+        let timestamp = Date().timeIntervalSince1970
+        let uniqueEmail = "bounce-list-test-\(Int(timestamp))@test-bounces.com"
 
-    let createRequest = Mailgun.Suppressions.Bounces.Create.Request(
-      address: try .init(uniqueEmail),
-      code: "550",
-      error: "Test error for list"
-    )
+        let createRequest = Mailgun.Suppressions.Bounces.Create.Request(
+            address: try .init(uniqueEmail),
+            code: "550",
+            error: "Test error for list"
+        )
 
-    _ = try await suppressions.client.bounces.create(createRequest)
+        _ = try await suppressions.client.bounces.create(createRequest)
 
-    // Now list the bounce records
-    let listRequest = Mailgun.Suppressions.Bounces.List.Request(
-      limit: 25,
-      page: nil,
-      term: nil
-    )
+        // Now list the bounce records
+        let listRequest = Mailgun.Suppressions.Bounces.List.Request(
+            limit: 25,
+            page: nil,
+            term: nil
+        )
 
-    let response = try await suppressions.client.bounces.list(listRequest)
+        let response = try await suppressions.client.bounces.list(listRequest)
 
-    #expect(!response.items.isEmpty)
-    #expect(!response.paging.first.isEmpty)
-    #expect(!response.paging.last.isEmpty)
+        #expect(!response.items.isEmpty)
+        #expect(!response.paging.first.isEmpty)
+        #expect(!response.paging.last.isEmpty)
 
-    // Clean up
-    _ = try? await suppressions.client.bounces.delete(try .init(uniqueEmail))
-  }
-  @Test("Should successfully delete bounce record")
-  func testDeleteBounceRecord() async throws {
-    @Dependency(Mailgun.Suppressions.self) var suppressions
-    //
-    // First create a bounce record to delete
-    let timestamp = Date().timeIntervalSince1970
-    let uniqueEmail = "bounce-delete-test-\(Int(timestamp))@test-bounces.com"
+        // Clean up
+        _ = try? await suppressions.client.bounces.delete(try .init(uniqueEmail))
+    }
+    @Test("Should successfully delete bounce record")
+    func testDeleteBounceRecord() async throws {
+        @Dependency(Mailgun.Suppressions.self) var suppressions
+        //
+        // First create a bounce record to delete
+        let timestamp = Date().timeIntervalSince1970
+        let uniqueEmail = "bounce-delete-test-\(Int(timestamp))@test-bounces.com"
 
-    let createRequest = Mailgun.Suppressions.Bounces.Create.Request(
-      address: try .init(uniqueEmail),
-      code: "550",
-      error: "Test error for deletion"
-    )
+        let createRequest = Mailgun.Suppressions.Bounces.Create.Request(
+            address: try .init(uniqueEmail),
+            code: "550",
+            error: "Test error for deletion"
+        )
 
-    _ = try await suppressions.client.bounces.create(createRequest)
+        _ = try await suppressions.client.bounces.create(createRequest)
 
-    // Now delete it
-    let response = try await suppressions.client.bounces.delete(try .init(uniqueEmail))
+        // Now delete it
+        let response = try await suppressions.client.bounces.delete(try .init(uniqueEmail))
 
-    #expect(response.message == "Bounced address has been removed")
-    #expect(response.address.address == uniqueEmail)
-  }
-  @Test("Should successfully delete all bounce records")
-  func testDeleteAllBounceRecords() async throws {
-    @Dependency(Mailgun.Suppressions.self) var suppressions
+        #expect(response.message == "Bounced address has been removed")
+        #expect(response.address.address == uniqueEmail)
+    }
+    @Test("Should successfully delete all bounce records")
+    func testDeleteAllBounceRecords() async throws {
+        @Dependency(Mailgun.Suppressions.self) var suppressions
 
-    let response = try await suppressions.client.bounces.deleteAll()
+        let response = try await suppressions.client.bounces.deleteAll()
 
-    #expect(response.message == "Bounced addresses for this domain have been removed")
-  }
+        #expect(response.message == "Bounced addresses for this domain have been removed")
+    }
 }

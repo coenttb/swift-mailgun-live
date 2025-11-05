@@ -9,10 +9,10 @@ import Dependencies
 import Foundation
 
 extension URL {
-  package static var mailgun: URL {
-    .init(fileURLWithPath: #filePath)
-      .deletingLastPathComponent()
-      .deletingLastPathComponent()
-      .deletingLastPathComponent()
-  }
+    package static var mailgun: URL {
+        .init(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+    }
 }

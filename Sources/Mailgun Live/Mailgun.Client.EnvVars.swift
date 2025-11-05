@@ -11,19 +11,19 @@ import Foundation
 import Mailgun_Types
 
 extension Mailgun.Client {
-  public struct EnvVars: Codable {
-    public var baseUrl: URL
-    public var apiKey: ApiKey
-    public var domain: Domain
+    public struct EnvVars: Codable {
+        public var baseUrl: URL
+        public var apiKey: ApiKey
+        public var domain: Domain
 
-    public init(
-      baseUrl: URL,
-      apiKey: ApiKey,
-      domain: Domain
-    ) {
-      self.baseUrl = baseUrl
-      self.apiKey = apiKey
-      self.domain = domain
+        public init(
+            baseUrl: URL,
+            apiKey: ApiKey,
+            domain: Domain
+        ) {
+            self.baseUrl = baseUrl
+            self.apiKey = apiKey
+            self.domain = domain
+        }
     }
-  }
 }

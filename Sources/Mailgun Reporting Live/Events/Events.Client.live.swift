@@ -12,41 +12,42 @@ import IssueReporting
 @_exported import Mailgun_Shared_Live
 
 #if canImport(FoundationNetworking)
-  import FoundationNetworking
+    import FoundationNetworking
 #endif
 
 extension Mailgun.Reporting.Events.Client {
-  public static func live(
-    makeRequest: @escaping @Sendable (_ route: Mailgun.Reporting.Events.API) throws -> URLRequest
-  ) -> Self {
-    @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
-    @Dependency(\.envVars.mailgun.domain) var domain
+    public static func live(
+        makeRequest:
+            @escaping @Sendable (_ route: Mailgun.Reporting.Events.API) throws -> URLRequest
+    ) -> Self {
+        @Dependency(URLRequest.Handler.Mailgun.self) var handleRequest
+        @Dependency(\.envVars.mailgun.domain) var domain
 
-    return Self(
-      list: { query in
-        try await handleRequest(
-          for: makeRequest(.list(domain: domain, query: query)),
-          decodingTo: Mailgun.Reporting.Events.List.Response.self
+        return Self(
+            list: { query in
+                try await handleRequest(
+                    for: makeRequest(.list(domain: domain, query: query)),
+                    decodingTo: Mailgun.Reporting.Events.List.Response.self
+                )
+            }
         )
-      }
-    )
-  }
+    }
 }
 
 extension Mailgun.Reporting.Events {
-  public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
-    Mailgun.Reporting.Events.API,
-    Mailgun.Reporting.Events.API.Router,
-    Mailgun.Reporting.Events.Client
-  >
+    public typealias Authenticated = Mailgun_Shared_Live.Authenticated<
+        Mailgun.Reporting.Events.API,
+        Mailgun.Reporting.Events.API.Router,
+        Mailgun.Reporting.Events.Client
+    >
 }
 
 extension Mailgun.Reporting.Events: @retroactive DependencyKey {
-  public static var liveValue: Mailgun.Reporting.Events.Authenticated {
-    try! Mailgun.Reporting.Events.Authenticated { .live(makeRequest: $0) }
-  }
+    public static var liveValue: Mailgun.Reporting.Events.Authenticated {
+        try! Mailgun.Reporting.Events.Authenticated { .live(makeRequest: $0) }
+    }
 }
 
 extension Mailgun.Reporting.Events.API.Router: @retroactive DependencyKey {
-  public static let liveValue: Mailgun.Reporting.Events.API.Router = .init()
+    public static let liveValue: Mailgun.Reporting.Events.API.Router = .init()
 }
