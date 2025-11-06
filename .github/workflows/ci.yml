@@ -107,8 +107,9 @@ jobs:
           restore-keys: ${{ runner.os }}-swift60-compat-spm-
 
       # Note: swift test builds automatically
+      # Disable parallel execution to avoid Swift 6.0 dependency initialization crash
       - name: Test (Swift 6.0)
-        run: swift test -c release
+        run: swift test -c release --no-parallel
         env:
           MAILGUN_BASE_URL: ${{ secrets.MAILGUN_BASE_URL }}
           MAILGUN_PRIVATE_API_KEY: ${{ secrets.MAILGUN_PRIVATE_API_KEY }}
