@@ -6,14 +6,24 @@ disabled_rules:
   - explicit_enum_raw_value
   - file_length
   - function_body_length
+  - type_body_length  # Test files with comprehensive tests can be large
   - redundant_discardable_let  # Preserve 'let _ =' in result builder contexts (required for Swift 6.0+)
+  - opening_brace  # Handled by swift-format
+  - trailing_comma  # Handled by swift-format
+  - trailing_whitespace  # Handled by swift-format
+  - orphaned_doc_comment
+  - inclusive_language
+  - redundant_string_enum_value
+  - todo
+  - comment_spacing
+  - force_try  # Acceptable in live test implementations
+  - for_where  # Intentional control flow clarity
+  - is_disjoint  # Style preference
 
 opt_in_rules:
   - empty_count
-  - explicit_init
   - sorted_imports
   - force_cast
-  - force_try
   - closure_spacing
   - operator_usage_whitespace
   - private_outlet
@@ -39,6 +49,7 @@ excluded:
   - Pods
   - fastlane
   - build
+  - .build
 
 analyzer_rules:
   - unused_import

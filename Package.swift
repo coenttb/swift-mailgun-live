@@ -48,45 +48,101 @@ extension Target.Dependency {
 }
 
 extension Target.Dependency {
-    static var authenticating: Self { .product(name: "Authenticating", package: "swift-authenticating") }
-    static var environmentVariables: Self { .product(name: "EnvironmentVariables", package: "swift-environment-variables") }
-    static var dependenciesMacros: Self { .product(name: "DependenciesMacros", package: "swift-dependencies") }
-    static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
-    static var issueReporting: Self { .product(name: "IssueReporting", package: "xctest-dynamic-overlay") }
+    static var authenticating: Self {
+        .product(name: "Authenticating", package: "swift-authenticating")
+    }
+    static var environmentVariables: Self {
+        .product(name: "EnvironmentVariables", package: "swift-environment-variables")
+    }
+    static var dependenciesMacros: Self {
+        .product(name: "DependenciesMacros", package: "swift-dependencies")
+    }
+    static var dependenciesTestSupport: Self {
+        .product(name: "DependenciesTestSupport", package: "swift-dependencies")
+    }
+    static var issueReporting: Self {
+        .product(name: "IssueReporting", package: "xctest-dynamic-overlay")
+    }
 }
 
 extension Target.Dependency {
-    static var mailgunTypes: Self { .product(name: "Mailgun Types", package: "swift-mailgun-types" ) }
-    static var accountManagementTypes: Self { .product(name: "Mailgun AccountManagement Types", package: "swift-mailgun-types" ) }
-    static var credentialsTypes: Self { .product(name: "Mailgun Credentials Types", package: "swift-mailgun-types" ) }
-    static var customMessageLimitTypes: Self { .product(name: "Mailgun CustomMessageLimit Types", package: "swift-mailgun-types" ) }
-    static var domainsTypes: Self { .product(name: "Mailgun Domains Types", package: "swift-mailgun-types" ) }
-    static var eventsTypes: Self { .product(name: "Mailgun Reporting Types", package: "swift-mailgun-types" ) }
-    static var ipAllowlistTypes: Self { .product(name: "Mailgun IPAllowlist Types", package: "swift-mailgun-types" ) }
-    static var ipPoolsTypes: Self { .product(name: "Mailgun IPPools Types", package: "swift-mailgun-types" ) }
-    static var ipsTypes: Self { .product(name: "Mailgun IPs Types", package: "swift-mailgun-types" ) }
-    static var keysTypes: Self { .product(name: "Mailgun Keys Types", package: "swift-mailgun-types" ) }
-    static var listsTypes: Self { .product(name: "Mailgun Lists Types", package: "swift-mailgun-types" ) }
-    static var messagesTypes: Self { .product(name: "Mailgun Messages Types", package: "swift-mailgun-types" ) }
-    static var reportingTypes: Self { .product(name: "Mailgun Reporting Types", package: "swift-mailgun-types" ) }
-    static var routesTypes: Self { .product(name: "Mailgun Routes Types", package: "swift-mailgun-types" ) }
-    static var subaccountsTypes: Self { .product(name: "Mailgun Subaccounts Types", package: "swift-mailgun-types" ) }
-    static var suppressionsTypes: Self { .product(name: "Mailgun Suppressions Types", package: "swift-mailgun-types" ) }
-    static var tagsTypes: Self { .product(name: "Mailgun Reporting Types", package: "swift-mailgun-types" ) }
-    static var templatesTypes: Self { .product(name: "Mailgun Templates Types", package: "swift-mailgun-types" ) }
-    static var usersTypes: Self { .product(name: "Mailgun Users Types", package: "swift-mailgun-types" ) }
-    static var webhooksTypes: Self { .product(name: "Mailgun Webhooks Types", package: "swift-mailgun-types" ) }
-    static var mailgunTypesShared: Self { .product(name: "Mailgun Types Shared", package: "swift-mailgun-types" ) }
-    static var urlrequestHandler: Self { .product(name: "URLRequestHandler", package: "swift-urlrequest-handler" ) }
-    static var urlRouting: Self { .product(name: "URLRouting", package: "swift-url-routing" ) }
-    static var urlFormCoding: Self { .product(name: "URLFormCoding", package: "swift-url-form-coding" ) }
+    static var mailgunTypes: Self {
+        .product(name: "Mailgun Types", package: "swift-mailgun-types")
+    }
+    static var accountManagementTypes: Self {
+        .product(name: "Mailgun AccountManagement Types", package: "swift-mailgun-types")
+    }
+    static var credentialsTypes: Self {
+        .product(name: "Mailgun Credentials Types", package: "swift-mailgun-types")
+    }
+    static var customMessageLimitTypes: Self {
+        .product(name: "Mailgun CustomMessageLimit Types", package: "swift-mailgun-types")
+    }
+    static var domainsTypes: Self {
+        .product(name: "Mailgun Domains Types", package: "swift-mailgun-types")
+    }
+    static var eventsTypes: Self {
+        .product(name: "Mailgun Reporting Types", package: "swift-mailgun-types")
+    }
+    static var ipAllowlistTypes: Self {
+        .product(name: "Mailgun IPAllowlist Types", package: "swift-mailgun-types")
+    }
+    static var ipPoolsTypes: Self {
+        .product(name: "Mailgun IPPools Types", package: "swift-mailgun-types")
+    }
+    static var ipsTypes: Self {
+        .product(name: "Mailgun IPs Types", package: "swift-mailgun-types")
+    }
+    static var keysTypes: Self {
+        .product(name: "Mailgun Keys Types", package: "swift-mailgun-types")
+    }
+    static var listsTypes: Self {
+        .product(name: "Mailgun Lists Types", package: "swift-mailgun-types")
+    }
+    static var messagesTypes: Self {
+        .product(name: "Mailgun Messages Types", package: "swift-mailgun-types")
+    }
+    static var reportingTypes: Self {
+        .product(name: "Mailgun Reporting Types", package: "swift-mailgun-types")
+    }
+    static var routesTypes: Self {
+        .product(name: "Mailgun Routes Types", package: "swift-mailgun-types")
+    }
+    static var subaccountsTypes: Self {
+        .product(name: "Mailgun Subaccounts Types", package: "swift-mailgun-types")
+    }
+    static var suppressionsTypes: Self {
+        .product(name: "Mailgun Suppressions Types", package: "swift-mailgun-types")
+    }
+    static var tagsTypes: Self {
+        .product(name: "Mailgun Reporting Types", package: "swift-mailgun-types")
+    }
+    static var templatesTypes: Self {
+        .product(name: "Mailgun Templates Types", package: "swift-mailgun-types")
+    }
+    static var usersTypes: Self {
+        .product(name: "Mailgun Users Types", package: "swift-mailgun-types")
+    }
+    static var webhooksTypes: Self {
+        .product(name: "Mailgun Webhooks Types", package: "swift-mailgun-types")
+    }
+    static var mailgunTypesShared: Self {
+        .product(name: "Mailgun Types Shared", package: "swift-mailgun-types")
+    }
+    static var urlrequestHandler: Self {
+        .product(name: "URLRequestHandler", package: "swift-urlrequest-handler")
+    }
+    static var urlRouting: Self { .product(name: "URLRouting", package: "swift-url-routing") }
+    static var urlFormCoding: Self {
+        .product(name: "URLFormCoding", package: "swift-url-form-coding")
+    }
 }
 
 let package = Package(
     name: "swift-mailgun-live",
     platforms: [
         .macOS(.v14),
-        .iOS(.v17)
+        .iOS(.v17),
     ],
     products: [
         .library(name: .mailgun, targets: [.mailgun]),
@@ -107,17 +163,17 @@ let package = Package(
         .library(name: .templates, targets: [.templates]),
         .library(name: .users, targets: [.users]),
         .library(name: .webhooks, targets: [.webhooks]),
-        .library(name: .shared, targets: [.shared])
+        .library(name: .shared, targets: [.shared]),
     ],
     dependencies: [
         .package(url: "https://github.com/coenttb/swift-authenticating", from: "0.0.2"),
         .package(url: "https://github.com/coenttb/swift-environment-variables", from: "0.0.1"),
         .package(url: "https://github.com/coenttb/swift-urlrequest-handler", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.2.0"),        
+        .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.2.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
         .package(url: "https://github.com/pointfreeco/swift-url-routing", from: "0.6.2"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.4.3"),
-        .package(url: "https://github.com/coenttb/swift-url-form-coding", from: "0.1.0")
+        .package(url: "https://github.com/coenttb/swift-url-form-coding", from: "0.1.0"),
     ],
     targets: [
         .target(
@@ -128,7 +184,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .environmentVariables,
                 .urlRouting,
-                .urlFormCoding
+                .urlFormCoding,
 
             ]
         ),
@@ -157,14 +213,14 @@ let package = Package(
                 .templates,
                 .users,
                 .webhooks,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
             name: .mailgun.tests,
             dependencies: [
                 .mailgun,
-                .dependenciesTestSupport
+                .dependenciesTestSupport,
             ]
         ),
         .target(
@@ -175,7 +231,7 @@ let package = Package(
                 .accountManagementTypes,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -190,7 +246,7 @@ let package = Package(
                 .credentialsTypes,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -205,7 +261,7 @@ let package = Package(
                 .customMessageLimitTypes,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -220,7 +276,7 @@ let package = Package(
                 .domainsTypes,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -235,7 +291,7 @@ let package = Package(
                 .ipAllowlistTypes,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -250,7 +306,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -265,7 +321,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -280,7 +336,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -295,7 +351,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -310,7 +366,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -325,7 +381,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -340,7 +396,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -355,7 +411,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -370,7 +426,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -385,7 +441,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -400,7 +456,7 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
@@ -415,13 +471,13 @@ let package = Package(
                 .mailgunTypesShared,
                 .issueReporting,
                 .dependenciesMacros,
-                .urlrequestHandler
+                .urlrequestHandler,
             ]
         ),
         .testTarget(
             name: .webhooks.tests,
             dependencies: [.webhooks, .shared, .dependenciesTestSupport]
-        )
+        ),
     ]
 )
 
