@@ -39,7 +39,14 @@ jobs:
       - name: Run all tests
         run: swift test -c release
         env:
-          SKIP_LIVE_TESTS: true
+          MAILGUN_BASE_URL: ${{ secrets.MAILGUN_BASE_URL }}
+          MAILGUN_PRIVATE_API_KEY: ${{ secrets.MAILGUN_PRIVATE_API_KEY }}
+          MAILGUN_DOMAIN: ${{ secrets.MAILGUN_DOMAIN }}
+          MAILGUN_WEBHOOK_SIGNING_KEY: ${{ secrets.MAILGUN_WEBHOOK_SIGNING_KEY }}
+          MAILGUN_FROM_EMAIL: ${{ secrets.MAILGUN_FROM_EMAIL }}
+          MAILGUN_TO_EMAIL: ${{ secrets.MAILGUN_TO_EMAIL }}
+          MAILGUN_TEST_MAILINGLIST: ${{ secrets.MAILGUN_TEST_MAILINGLIST }}
+          MAILGUN_TEST_RECIPIENT: ${{ secrets.MAILGUN_TEST_RECIPIENT }}
 
       - name: Run README verification tests
         run: swift test -c release --filter ReadmeVerificationTests || true
