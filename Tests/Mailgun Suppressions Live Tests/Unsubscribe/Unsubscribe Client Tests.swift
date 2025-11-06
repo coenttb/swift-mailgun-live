@@ -19,8 +19,8 @@ struct UnsubscribeClientTests {
         // List without filters
         let response = try await unsubscribe.client.list(nil)
 
-        // Verify response structure (don't assume empty - test data may exist)
-        #expect(response.items.count >= 0)  // Can be empty or contain test data
+        // Verify response structure - should be empty in clean sandbox
+        #expect(response.items.isEmpty)
         #expect(!response.paging.first.isEmpty)
         #expect(!response.paging.last.isEmpty)
     }
@@ -114,13 +114,6 @@ struct UnsubscribeClientTests {
             tags: ["get-test"]
         )
 
-        // Ensure cleanup happens even if test fails
-        defer {
-            Task {
-                _ = try? await unsubscribe.client.delete(try? EmailAddress(testEmail))
-            }
-        }
-
         do {
             // Create the record
             _ = try await unsubscribe.client.create(createRequest)
@@ -139,6 +132,9 @@ struct UnsubscribeClientTests {
                 throw error
             }
         }
+
+        // Cleanup always runs (even if test fails)
+        _ = try? await unsubscribe.client.delete(try EmailAddress(testEmail))
     }
 
     @Test("Should successfully delete unsubscribe record")
@@ -296,8 +292,8 @@ struct UnsubscribeClientTests {
 
         let response = try await unsubscribe.client.list(request)
 
-        // Verify we got results structure (may or may not be empty depending on test data)
-        #expect(response.items.count >= 0)
+        // Verify we got results - should be empty when no matching records exist
+        #expect(response.items.isEmpty)
 
         // If we have results, verify they match the term
         for item in response.items {
